@@ -17,6 +17,54 @@ const PaystackButton = dynamic(
     ssr: false,
   }
 );
+
+const stateMultipliers: Record<string, number> = {
+
+  Lagos: 1.35,
+
+  Abuja: 1.30,
+
+  Rivers: 1.25,
+
+  PortHarcourt: 1.20,
+
+  Kano: 1.05,
+
+  Enugu: 1.10,
+
+  Ibadan: 1.08,
+
+  Kaduna: 1.07,
+
+  Kwara: 1.00,
+
+  Ogun: 1.12,
+
+};
+
+const finishMultipliers: Record<string, number> = {
+
+  Basic: 1.0,
+
+  Standard: 1.25,
+
+  Luxury: 1.6,
+
+};
+
+const buildingBaseCosts: Record<string, number> = {
+
+  Bungalow: 180000,
+
+  Duplex: 250000,
+
+  MiniFlat: 160000,
+
+  Mansion: 400000,
+
+};
+
+
 export default function Home() {
   const [projectName, setProjectName] = useState("");
   const [state, setState] = useState("");
@@ -432,6 +480,7 @@ const paystackProps = {
 
   alert(
     "Payment Successful!"
+    
   );
 
   setShowEmailModal(false);
@@ -445,8 +494,7 @@ const paystackProps = {
 
 if (emailModalType === "premium") {
 
-  window.location.href =
-    "/premium-dashboard";
+  window.location.href = "/premium-dashboard";
 
 }
 
@@ -798,13 +846,23 @@ const contractors = [
               {/* Button */}
               <button
                 onClick={() => {
-                 const baseRate = locationRates[location] || 300000;
+                 const baseCost =
+  buildingBaseCosts[projectName] || 180000;
+
+const stateMultiplier =
+  stateMultipliers[state] || 1;
 
 const finishMultiplier =
   finishMultipliers[finish] || 1;
 
+const convertedSize =
+  Number(size);
+
 const estimatedCost =
-  Number(size) * baseRate * finishMultiplier;
+  convertedSize *
+  baseCost *
+  stateMultiplier *
+  finishMultiplier;
 
                   setResult(estimatedCost);
 
