@@ -974,7 +974,7 @@ const contractors = [
 <option>Ondo</option>
 <option>CrossRiver</option>
 <option>Delta</option>
-<option>Akwa Ibom</option>
+<option>AkwaIbom</option>
 <option>Bayelsa</option>
 <option>Edo</option>
 <option>Niger</option>
