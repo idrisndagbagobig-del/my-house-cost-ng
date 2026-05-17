@@ -24,6 +24,7 @@ import {
   floorMultipliers,
   foundationMultipliers,
   unitMultipliers,
+  locationMultipliers,
 } from "@/data/multipliers";
 
 import {
@@ -1065,6 +1066,14 @@ const contractors = [
 const stateMultiplier =
   stateMultipliers[state] || 1;
 
+  const locationKey =
+  location.replace(/\s/g, "");
+
+const locationMultiplier =
+  locationMultipliers[
+    locationKey
+  ] || 1;
+
 const finishMultiplier =
   finishMultipliers[finish] || 1;
 
@@ -1091,6 +1100,7 @@ const estimatedCost =
   convertedSize *
   baseCost *
   stateMultiplier *
+  locationMultiplier *
   finishMultiplier *
   bedroomMultiplier *
   floorMultiplier *
@@ -1237,134 +1247,6 @@ const estimatedCost =
 
 </div>
 
-{/* What-If Simulator */}
-<div className="bg-[#1A1D24] border border-[#2A2F3A] rounded-[32px] p-6 mt-6">
-
-  <div className="flex items-center justify-between">
-
-    <div>
-
-      <h3 className="text-2xl font-bold">
-        What-If Simulator
-      </h3>
-
-      <p className="text-gray-400 mt-1">
-        Customize your project
-      </p>
-
-    </div>
-
-    <div className="text-3xl">
-      🎛️
-    </div>
-
-  </div>
-
-  <div className="space-y-4 mt-6">
-
-    {/* Fence */}
-    <label className="flex items-center justify-between border border-[#2A2F3A] rounded-2xl p-4 cursor-pointer">
-
-      <div>
-
-        <p className="font-semibold">
-          Add Fence
-        </p>
-
-        <p className="text-sm text-gray-400">
-          + ₦2,500,000
-        </p>
-
-      </div>
-
-      <input
-        type="checkbox"
-        checked={addFence}
-        onChange={() =>
-          setAddFence(!addFence)
-        }
-      />
-
-    </label>
-
-    {/* BQ */}
-    <label className="flex items-center justify-between border border-[#2A2F3A] rounded-2xl p-4 cursor-pointer">
-
-      <div>
-
-        <p className="font-semibold">
-          Add Boys Quarters
-        </p>
-
-        <p className="text-sm text-gray-400">
-          + ₦7,000,000
-        </p>
-
-      </div>
-
-      <input
-        type="checkbox"
-        checked={addBQ}
-        onChange={() =>
-          setAddBQ(!addBQ)
-        }
-      />
-
-    </label>
-
-    {/* Pool */}
-    <label className="flex items-center justify-between border border-[#2A2F3A] rounded-2xl p-4 cursor-pointer">
-
-      <div>
-
-        <p className="font-semibold">
-          Add Swimming Pool
-        </p>
-
-        <p className="text-sm text-gray-400">
-          + ₦5,000,000
-        </p>
-
-      </div>
-
-      <input
-        type="checkbox"
-        checked={addPool}
-        onChange={() =>
-          setAddPool(!addPool)
-        }
-      />
-
-    </label>
-
-    {/* Roof */}
-    <label className="flex items-center justify-between border border-[#2A2F3A] rounded-2xl p-4 cursor-pointer">
-
-      <div>
-
-        <p className="font-semibold">
-          Luxury Roofing
-        </p>
-
-        <p className="text-sm text-gray-400">
-          + ₦3,500,000
-        </p>
-
-      </div>
-
-      <input
-        type="checkbox"
-        checked={luxuryRoof}
-        onChange={() =>
-          setLuxuryRoof(!luxuryRoof)
-        }
-      />
-
-    </label>
-
-  </div>
-
-</div>
 
 {/* Cost Comparison */}
 <div className="bg-[#1A1D24] border border-[#2A2F3A] rounded-[32px] p-6 mt-6">
@@ -1534,51 +1416,6 @@ const estimatedCost =
 
 </div>
 
-{/* AI Smart Insights */}
-<div className="bg-[#1A1D24] border border-[#2A2F3A] rounded-[32px] p-6 mt-6">
-
-  <div className="flex items-center justify-between">
-
-    <div>
-
-      <h3 className="text-2xl font-bold">
-        AI Smart Insights
-      </h3>
-
-      <p className="text-gray-400 mt-1">
-        Intelligent project recommendations
-      </p>
-
-    </div>
-
-    <div className="text-3xl">
-      🧠
-    </div>
-
-  </div>
-
-  <div className="space-y-4 mt-6">
-
-    {smartInsights.map((insight, index) => (
-
-      <div
-        key={index}
-        className="border border-[#2A2F3A] rounded-2xl p-4"
-      >
-
-        <p className="text-sm leading-relaxed text-gray-300">
-
-          {insight}
-
-        </p>
-
-      </div>
-
-    ))}
-
-  </div>
-
-</div>
 
             {/* Packages */}
             <div className="space-y-3 mt-6">
