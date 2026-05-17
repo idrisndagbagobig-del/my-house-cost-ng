@@ -961,10 +961,26 @@ const contractors = [
 <option>Rivers</option>
 <option>Kano</option>
 <option>Enugu</option>
-<option>Ibadan</option>
+<option>Oyo</option>
 <option>Kaduna</option>
 <option>Kwara</option>
 <option>Ogun</option>
+<option>Abia</option>
+<option>Anambra</option>
+<option>Ebonyi</option>
+<option>Imo</option>
+<option>Osun</option>
+<option>Ekiti</option>
+<option>Ondo</option>
+<option>CrossRiver</option>
+<option>Delta</option>
+<option>Akwa Ibom</option>
+<option>Bayelsa</option>
+<option>Edo</option>
+<option>Niger</option>
+<option>Benue</option>
+<option>Kogi</option>
+
                 </select>
               </div>
 
