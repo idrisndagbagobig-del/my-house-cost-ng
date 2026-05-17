@@ -53,9 +53,9 @@ Record<string, number> = {
 
 export const finishMultipliers = {
 
-  Basic: 0.5,
+  Basic: 0.6,
 
-  Standard: 0.6,
+  Standard: 0.7,
 
   Luxury: 0.8,
 
@@ -66,17 +66,17 @@ export const bedroomMultipliers: Record<
   number
 > = {
 
-  1: 0.7,
+  1: 0.2,
 
-  2: 0.82,
+  2: 0.3,
 
-  3: 1,
+  3: 0.4,
 
-  4: 1.12,
+  4: 0.5,
 
-  5: 1.22,
+  5: 0.6,
 
-  6: 1.35,
+  6: 0.7,
 
 };
 
