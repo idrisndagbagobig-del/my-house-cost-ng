@@ -10,6 +10,30 @@ import { supabase } from "@/lib/supabase";
 import emailjs from "emailjs-com";
 import html2canvas from "html2canvas";
 
+import GoogleSignIn
+from "@/components/GoogleSignIn";
+
+import {
+  stateLocations,
+} from "@/data/locations";
+
+import {
+  stateMultipliers,
+  finishMultipliers,
+  bedroomMultipliers,
+  floorMultipliers,
+  foundationMultipliers,
+  unitMultipliers,
+} from "@/data/multipliers";
+
+import {
+  buildingBaseCosts,
+} from "@/data/buildingCosts";
+
+import {
+  buildingTypes,
+} from "@/data/buildingTypes";
+
 const PaystackButton = dynamic(
   async () =>
     (await import("react-paystack")).PaystackButton,
@@ -18,53 +42,6 @@ const PaystackButton = dynamic(
   }
 );
 
-const stateMultipliers: Record<string, number> = {
-
-  Lagos: 1.35,
-
-  Abuja: 1.30,
-
-  Rivers: 1.25,
-
-  PortHarcourt: 1.20,
-
-  Kano: 1.05,
-
-  Enugu: 1.10,
-
-  Ibadan: 1.08,
-
-  Kaduna: 1.07,
-
-  Kwara: 1.00,
-
-  Ogun: 1.12,
-
-};
-
-const finishMultipliers: Record<string, number> = {
-
-  Basic: 1.0,
-
-  Standard: 1.25,
-
-  Luxury: 1.6,
-
-};
-
-const buildingBaseCosts: Record<string, number> = {
-
-  Bungalow: 180000,
-
-  Duplex: 250000,
-
-  MiniFlat: 160000,
-
-  Mansion: 400000,
-
-};
-
-
 export default function Home() {
   const [projectName, setProjectName] = useState("");
   const [state, setState] = useState("");
@@ -72,7 +49,27 @@ export default function Home() {
 
   const [location, setLocation] = useState("");
   const [size, setSize] = useState("");
+
+  const [sizeUnit, setSizeUnit] =
+  useState("SQM");
+
   const [finish, setFinish] = useState("Standard");
+
+  const [buildingCategory, setBuildingCategory] =
+  useState("Bungalow");
+
+  const [buildingSubtype, setBuildingSubtype] =
+  useState("Detached Bungalow");
+
+const [bedrooms, setBedrooms] =
+  useState(3);
+
+  const [floors, setFloors] =
+  useState(1);
+
+  const [units, setUnits] =
+  useState(1);
+
   const [result, setResult] = useState<number | null>(null);
   const [showResult, setShowResult] = useState(false);
   const [showEmailModal, setShowEmailModal] = useState(false);
@@ -774,6 +771,159 @@ const contractors = [
                 />
               </div>
 
+<select
+  value={buildingCategory}
+  onChange={(e) =>
+    setBuildingCategory(e.target.value)
+  }
+  className="w-full mt-3 p-4 rounded-2xl bg-[#0F1115] border border-[#2A2F3A] outline-none"
+>
+
+  {Object.keys(buildingTypes).map(
+    (category) => (
+
+      <option
+        key={category}
+        value={category}
+      >
+        {category}
+      </option>
+
+    )
+  )}
+
+</select>
+
+<select
+  value={buildingSubtype}
+  onChange={(e) =>
+    setBuildingSubtype(e.target.value)
+  }
+  className="w-full mt-3 p-4 rounded-2xl bg-[#0F1115] border border-[#2A2F3A] outline-none"
+>
+
+  {buildingTypes[
+    buildingCategory as keyof typeof buildingTypes
+  ]?.map((type) => (
+
+    <option
+      key={type}
+      value={type}
+    >
+      {type}
+    </option>
+
+  ))}
+
+</select>
+
+{buildingCategory !== "HighRise" && (
+
+<select
+  value={bedrooms}
+  onChange={(e) =>
+    setBedrooms(Number(e.target.value))
+  }
+  className="w-full mt-3 p-4 rounded-2xl bg-[#0F1115] border border-[#2A2F3A] outline-none"
+>
+
+  <option value={1}>
+    1 Bedroom
+  </option>
+
+  <option value={2}>
+    2 Bedroom
+  </option>
+
+  <option value={3}>
+    3 Bedroom
+  </option>
+
+  <option value={4}>
+    4 Bedroom
+  </option>
+
+  <option value={5}>
+    5 Bedroom
+  </option>
+
+  <option value={6}>
+    6+ Bedroom
+  </option>
+
+</select>
+)}
+
+{(buildingCategory === "Apartment" ||
+  buildingCategory === "HighRise") && (
+
+<select
+  value={units}
+  onChange={(e) =>
+    setUnits(Number(e.target.value))
+  }
+  className="w-full mt-3 p-4 rounded-2xl bg-[#0F1115] border border-[#2A2F3A] outline-none"
+>
+
+  <option value={1}>
+    1 Unit
+  </option>
+
+  <option value={2}>
+    2 Units
+  </option>
+
+  <option value={4}>
+    4 Units
+  </option>
+
+  <option value={6}>
+    6 Units
+  </option>
+
+  <option value={8}>
+    8+ Units
+  </option>
+
+</select>
+
+)}
+
+{buildingCategory !== "Bungalow" &&
+ buildingCategory !== "Traditional" && (
+
+<select
+  value={floors}
+  onChange={(e) =>
+    setFloors(Number(e.target.value))
+  }
+  className="w-full mt-3 p-4 rounded-2xl bg-[#0F1115] border border-[#2A2F3A] outline-none"
+>
+
+  <option value={1}>
+    1 Floor
+  </option>
+
+  <option value={2}>
+    2 Floors
+  </option>
+
+  <option value={3}>
+    3 Floors
+  </option>
+
+  <option value={4}>
+    4 Floors
+  </option>
+
+  <option value={5}>
+    5+ Floors
+  </option>
+
+</select>
+
+)}
+
               {/* State */}
               <div>
                 <label className="text-sm text-gray-300">
@@ -785,9 +935,16 @@ const contractors = [
                   onChange={(e) => setState(e.target.value)}
                 >
                   <option value="">Select State</option>
-                  <option>Lagos</option>
-                  <option>Abuja</option>
-                  <option>Port Harcourt</option>
+
+<option>Lagos</option>
+<option>Abuja</option>
+<option>Rivers</option>
+<option>Kano</option>
+<option>Enugu</option>
+<option>Ibadan</option>
+<option>Kaduna</option>
+<option>Kwara</option>
+<option>Ogun</option>
                 </select>
               </div>
 
@@ -801,15 +958,20 @@ const contractors = [
     className="w-full mt-2 p-4 rounded-2xl bg-[#0F1115] border border-[#2A2F3A] outline-none"
     onChange={(e) => setLocation(e.target.value)}
   >
-    <option value="">Select Location</option>
+    <option value="">
+  Select Location
+</option>
 
-    <option>Lekki</option>
-    <option>Ajah</option>
-    <option>Ikorodu</option>
-    <option>Ikeja</option>
-    <option>Yaba</option>
-    <option>Abuja</option>
-    <option>Port Harcourt</option>
+{stateLocations[state]?.map((location) => (
+
+  <option
+    key={location}
+    value={location}
+  >
+    {location}
+  </option>
+
+))}
 
   </select>
 </div>
@@ -832,7 +994,7 @@ const contractors = [
               {/* Land Size */}
               <div>
                 <label className="text-sm text-gray-300">
-                  Land Size (m²)
+                  Land Size
                 </label>
 
                 <input
@@ -841,13 +1003,28 @@ const contractors = [
                   className="w-full mt-2 p-4 rounded-2xl bg-[#0F1115] border border-[#2A2F3A] outline-none"
                   onChange={(e) => setSize(e.target.value)}
                 />
+                <select
+  value={sizeUnit}
+  onChange={(e) =>
+    setSizeUnit(e.target.value)
+  }
+  className="w-full mt-3 p-4 rounded-2xl bg-[#0F1115] border border-[#2A2F3A] outline-none"
+>
+  <option value="SQM">
+    Square Meter (SQM)
+  </option>
+
+  <option value="FT">
+    Square Foot (FT²)
+  </option>
+</select>
               </div>
 
               {/* Button */}
               <button
                 onClick={() => {
                  const baseCost =
-  buildingBaseCosts[projectName] || 180000;
+  buildingBaseCosts[buildingSubtype]
 
 const stateMultiplier =
   stateMultipliers[state] || 1;
@@ -856,17 +1033,41 @@ const finishMultiplier =
   finishMultipliers[finish] || 1;
 
 const convertedSize =
-  Number(size);
+  sizeUnit === "FT"
+    ? Number(size) / 10.764
+    : Number(size);
+
+    const bedroomMultiplier =
+  bedroomMultipliers[bedrooms] || 1;
+
+  const floorMultiplier =
+  floorMultipliers[floors] || 1;
+
+  const foundationMultiplier =
+  foundationMultipliers[
+    buildingCategory
+  ] || 1;
+
+  const unitMultiplier =
+  unitMultipliers[units] || 1;
 
 const estimatedCost =
   convertedSize *
   baseCost *
   stateMultiplier *
-  finishMultiplier;
+  finishMultiplier *
+  bedroomMultiplier *
+  floorMultiplier *
+  foundationMultiplier *
+  unitMultiplier;
 
                   setResult(estimatedCost);
 
                   setShowResult(true);
+                  window.scrollTo({
+  top: 0,
+  behavior: "smooth",
+});
                 }}
                 className="w-full bg-[#D4A84F] text-black p-4 rounded-2xl font-bold text-lg mt-4 hover:scale-[0.98] transition-all duration-200"
               >
@@ -1496,6 +1697,7 @@ const estimatedCost =
       </p>
 
       {/* Email Input */}
+      <GoogleSignIn />
       <div className="mt-6">
 
         <label className="text-sm text-gray-300">
