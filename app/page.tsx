@@ -771,6 +771,10 @@ const contractors = [
                 />
               </div>
 
+<label className="text-sm text-gray-300">
+  Select Project/House
+</label>
+
 <select
   value={buildingCategory}
   onChange={(e) =>
@@ -794,6 +798,10 @@ const contractors = [
 
 </select>
 
+<label className="text-sm text-gray-300">
+  Select Type
+</label>
+
 <select
   value={buildingSubtype}
   onChange={(e) =>
@@ -816,6 +824,10 @@ const contractors = [
   ))}
 
 </select>
+
+<label className="text-sm text-gray-300">
+  Select No of Bedroom
+</label>
 
 {buildingCategory !== "HighRise" && (
 
@@ -889,6 +901,14 @@ const contractors = [
 
 )}
 
+{buildingCategory !== "Bungalow" &&
+ buildingCategory !== "Traditional" && (
+
+<label className="text-sm text-gray-300">
+  Select Floor
+</label>
+
+)}
 {buildingCategory !== "Bungalow" &&
  buildingCategory !== "Traditional" && (
 
