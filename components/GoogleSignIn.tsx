@@ -16,7 +16,7 @@ GoogleSignIn() {
       options: {
 
         redirectTo:
-          "http://localhost:3000/premium-dashboard",
+  "https://my-house-cost-ng.vercel.app/premium-dashboard",
 
       },
 
